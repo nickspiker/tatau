@@ -1,0 +1,8 @@
+[package]
+name = "tatau"
+version = "0.1.0"
+edition = "2024"
+description = "Every number a person reads, in the base they chose: arabic, hexadecimal, dozenal magnitude (DMS) or dozenal linear (DLS). No floats, no allocation, no dependencies."
+license = "MIT OR Apache-2.0"
+
+[dependencies]

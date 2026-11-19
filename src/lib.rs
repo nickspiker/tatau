@@ -330,6 +330,10 @@ pub fn share(w: &mut impl Write, f: Fmt, part: u64, whole: u64, width: usize) ->
             if part == whole {
                 return dozenal(w, f.style, &[1], None);
             }
+            // None of it: Zil, as all of it is Zila (the digit loop below counts only from the first nonzero digit, so a zero part never reached `width` and wrote 32 zeros; ferros's WiFi page, a loss of none, 2026-11-18).
+            if part == 0 {
+                return dozenal(w, f.style, &[0], None);
+            }
             let mut buf = [0u8; 64];
             let mut rem = part as u128;
             let mut n = 0;
@@ -444,6 +448,8 @@ mod tests {
         assert_eq!(s(|o| share(o, words(Base::Dms), 1, 3, 1)), "·Tera");
         assert_eq!(s(|o| share(o, words(Base::Dms), 1, 2, 1)), "·Lun");
         assert_eq!(s(|o| share(o, words(Base::Dms), 3, 3, 1)), "Zila");
+        assert_eq!(s(|o| share(o, words(Base::Dms), 0, 1_000_000, 2)), "Zil");
+        assert_eq!(s(|o| share(o, words(Base::Dls), 0, 3, 1)), "Zil");
     }
 
     /// Photon's anchors: three files is Zila·Luna (log2 3 = 1.585, seven twelfths of a doubling); a byte is Ter doublings of a bit; a kilobyte Zila Zila.
